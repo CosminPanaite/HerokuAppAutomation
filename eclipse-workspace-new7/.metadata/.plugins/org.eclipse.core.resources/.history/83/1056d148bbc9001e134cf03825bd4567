@@ -1,0 +1,30 @@
+package selenium;
+
+import org.openqa.selenium.WebDriver;  
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class MainClass {
+
+    public static void main(String[] args) throws InterruptedException {
+    	
+    	
+    	System.setProperty("webdriver.chrome.driver", "C:\\Users\\acasa\\eclipse-workspace-new5\\selenium\\chromedriver-win64\\chromedriver.exe");
+    	// u have the chromedriver inside the files in the project
+    	WebDriver driver = new ChromeDriver();
+        BaseClass page = new BaseClass(driver);
+
+        page.goToLink();
+        Thread.sleep(1500);
+        page.maximizeDriver();
+        Thread.sleep(1500);
+        page.sendWrongCredentials();
+        Thread.sleep(1500);
+        page.pressLogin();
+        Thread.sleep(2500);
+        driver.navigate().back();
+        page.sendWrongCredentials();
+        page.quitDriver();
+        
+       
+    }
+}

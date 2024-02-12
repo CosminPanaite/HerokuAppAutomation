@@ -1,0 +1,36 @@
+package selenium;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+public class BaseClassTest {
+	
+	WebDriver driver;
+	BaseClass page;
+
+	@BeforeMethod
+	public void setup() {
+		System.setProperty("webdriver.chrome.driver",
+				"D:/OneDrive/Documents/driver/chromedriver-win64/chromedriver.exe");
+		driver = new ChromeDriver();
+		driver.get(
+				"https://www.booking.com/index.ro.html?aid=2369661&pagename=ro-ro-booking-desktop&label=msn-B7x56xrVTCNcWVmBvA7CCw-80608133315310:tikwd-80608308432181:loc-224:neo:mte:lp140953:dec:qsbooking&utm_campaign=Romanian_Romania%20RO%20RO&utm_medium=cpc&utm_source=bing&utm_term=B7x56xrVTCNcWVmBvA7CCw&msclkid=e9016c273f1b113048d709ee65909013&utm_content=Booking%20-%20Desktop");
+
+		// Initialize the GoogleSearchPage with the WebDriver instance
+		page = new BaseClass(driver);
+	}
+
+	@Test(priority=1)
+	public void SearchZbor() {
+		page.goToLink();
+	}   
+	@AfterMethod
+	public void tearDown() throws InterruptedException {
+	
+		driver.quit();
+	}
+
+}

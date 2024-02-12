@@ -1,0 +1,61 @@
+package selenium;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+public class BaseClassTest {
+
+    WebDriver driver;
+    BaseClass page;
+
+    @BeforeMethod
+    public void setup() {
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\acasa\\eclipse-workspace-new5\\selenium\\chromedriver-win64\\chromedriver.exe");
+        driver = new ChromeDriver();
+        driver.get("https://the-internet.herokuapp.com/login");
+        page = new BaseClass(driver);
+    }
+
+    @Test(priority = 1)
+    public void SearchZbor() {
+        page.goToLink();
+        page.maximizeDriver();
+        page.sendWrongCredentials();
+        page.pressLogin();
+
+        WebDriverWait webdwait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        // Wait for the "flash" element to be visible
+        webdwait.until(ExpectedConditions.visibilityOfElementLocated(By.id("flash")));
+
+        // Perform assertions based on the presence of the "flash" element
+        // For example, assert that the error message element is present
+        // and contains expected text
+        String errorMessageText = page.getErrorMessageText();
+        assertErrorMessageIsPresent(errorMessageText);
+
+        // Additional assertions or actions can be added here if needed
+    }
+
+    private void assertErrorMessageIsPresent(String errorMessageText) {
+        // Example assertion, modify as per your actual requirements
+        assertNotNull(errorMessageText, "Error message is not displayed");
+        assertEquals(errorMessageText, "Expected error message", "Incorrect error message displayed");
+    }
+
+    @AfterMethod
+    public void tearDown() {
+        driver.quit();
+    }
+}
