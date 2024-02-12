@@ -45,7 +45,7 @@ public class BaseClass {
 
 	public void clearCredentials() {
 		username.clear();
-		;
+		
 		password.clear();
 
 	}
